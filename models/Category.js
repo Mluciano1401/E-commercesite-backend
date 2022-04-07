@@ -4,13 +4,10 @@ const CategorySchema = mongoose.Schema({
     name: {
         type: String,
         required: true
-    },
-    fechaCreacion: {
-        type: Date,
-        default: Date.now()
     }
-
+},{
+    timestamps: true
 })
 
 
-module.exports = mongoose.model('Product',CategorySchema);
+module.exports = mongoose.model('Category',CategorySchema);

@@ -33,20 +33,6 @@ exports.getuser = async (req,res) => {
     res.status(500).send('Mistake in sight!', error);
   }
 }
-exports.getuserLog = async (req,res) => {
-  try{
-    console.log(req.params)
-    let user = await User.find(req.params);
-    //let user = await User.find().where('username').equals(req.params.username).where('password').equals(req.params.password);
-    if(!user){
-      res.status(404).json({ msg: 'user not found'});
-    }
-    res.json(user);
-  }
-  catch (error){
-    res.status(500).send('Mistake in sight!', error);
-  }
-}
 exports.updateuser = async (req,res) => {
   try{
     const { name, lastname, username, password, money }= req.body;

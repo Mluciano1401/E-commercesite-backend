@@ -20,12 +20,9 @@ const ProductSchema = mongoose.Schema({
     idCategory: {
         type: String,
         required: true
-    },
-    fechaCreacion: {
-        type: Date,
-        default: Date.now()
     }
-
+},{
+    timestamps: true
 })
 
 
