@@ -65,3 +65,16 @@ exports.login = (req, res, next) => {
         }
     })
 }
+exports.getUser = (req, res, next) => {
+    try{
+      const users = Auth.find(user); 
+      console.log(users)  
+      res.send({users})
+    }
+    catch (error){
+        body_error={
+          "Mistake in sight!":error
+        }
+        res.status(500).send(body_error);
+      }
+}

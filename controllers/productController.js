@@ -5,10 +5,13 @@ exports.createProduct = async (req, res) => {
       let product;
       product = new Product(req.body);
       await product.save();
-      res.send(product);
+      res.status(201).send(product)
     }
     catch (error){
-      res.status(500).send('Mistake in sight!', error);
+      body_error={
+        "Mistake in sight!":error
+      }
+      res.status(500).send(body_error);
     }    
 }
 
@@ -18,10 +21,14 @@ exports.getProducts = async (req,res) => {
     res.json(products);
   }
   catch (error){
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }
 exports.getProduct = async (req,res) => {
+  console.log(0)
   try{
     let product = await Product.findById(req.params.id);
     if(!product){
@@ -30,12 +37,45 @@ exports.getProduct = async (req,res) => {
     res.json(product);
   }
   catch (error){
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
+  }
+}
+exports.getsproductsbysupplier = async (req,res)=>{
+  try{
+    let product = await Product.find({supplier: req.params.supplier});
+    if(!product){
+      res.status(404).json({ msg: 'products not found'});
+    }
+    res.send(product);
+  }
+  catch (error){
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
+  }
+}
+exports.getsproductsbycategory= async (req,res)=>{
+  try{
+    let product = await Product.find({category: req.params.category});
+    if(!product){
+      res.status(404).json({ msg: 'products not found'});
+    }
+    res.json(product);
+  }
+  catch (error){
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }
 exports.updateProduct = async (req,res) => {
   try{
-    const { name, description, urlImg, price, idCategory }= req.body;
+    const { name, description, urlImg, price, category, supplier }= req.body;
     let product = await Product.findById(req.params.id);
     if(!product){
       res.status(404).json({ msg: 'product not found'});
@@ -44,12 +84,16 @@ exports.updateProduct = async (req,res) => {
     product.description = description;
     product.urlImg = urlImg;
     product.price = price;
-    product.idCategory = idCategory;
+    product.category = category;
+    product.supplier = supplier;
     product = await Product.findByIdAndUpdate({_id: req.params.id}, product, {new:true});
     res.json(product);
   }
   catch (error){ 
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }
 exports.deleteProduct = async (req,res) => {
@@ -62,6 +106,9 @@ exports.deleteProduct = async (req,res) => {
     res.json({ msg: 'product removed successfully'});
   }
   catch (error){
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }

@@ -8,6 +8,9 @@ UserSchema.statics = {
     },
     login: function(query, cb){
         this.find(query, cb);
+    },
+    getUser: function(){
+        this.find();
     }
 }
 const authModel = mongoose.model("Auth", UserSchema);

@@ -26,6 +26,10 @@ const UserSchema =  new Schema({
     money: {
         type: Number,
         required: false
+    },
+    imageProfile:{
+        type: String,
+        required: false
     }
 },
 {

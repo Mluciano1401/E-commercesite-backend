@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require('../auth/auth.dao');
 
 exports.createuser = async (req, res) => {
     try{
@@ -63,5 +63,5 @@ exports.deleteuser = async (req,res) => {
   }
   catch (error){
     res.status(500).send('Mistake in sight!', error);
-}
+  }
 }

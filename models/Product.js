@@ -17,7 +17,11 @@ const ProductSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    idCategory: {
+    category: {
+        type: String,
+        required: true
+    },
+    supplier:{
         type: String,
         required: true
     }
