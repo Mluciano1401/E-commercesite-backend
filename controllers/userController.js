@@ -8,7 +8,10 @@ exports.createuser = async (req, res) => {
       res.send(user);
     }
     catch (error){
-      res.status(500).send('Mistake in sight!', error);
+      body_error={
+        "Mistake in sight!":error
+      }
+      res.status(500).send(body_error);
     }    
 }
 
@@ -18,7 +21,10 @@ exports.getusers = async (req,res) => {
     res.json(users);
   }
   catch (error){
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }
 exports.getuser = async (req,res) => {
@@ -30,12 +36,30 @@ exports.getuser = async (req,res) => {
     res.json(user);
   }
   catch (error){
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
+  }
+}
+exports.getuserbyname = async (req,res)=>{
+  try{
+    let user= await User.find({username: req.params.username});
+    if(!user){
+      res.status(404).json({ msg: 'user not found'});
+    }
+    res.send(user);
+  }
+  catch (error){
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }
 exports.updateuser = async (req,res) => {
   try{
-    const { name, lastname, username, password, money }= req.body;
+    const { name, lastname, username, password,role, money,urlImg }= req.body;
     let user = await User.findById(req.params.id);
     if(!user){
       res.status(404).json({ msg: 'user not found'});
@@ -44,12 +68,17 @@ exports.updateuser = async (req,res) => {
     user.lastname = lastname;
     user.username = username;
     user.password= password;
+    user.role = role;
     user.money = money;
+    user.urlImg = urlImg,
     user = await user.findByIdAndUpdate({_id: req.params.id}, user, {new:true});
     res.json(user);
   }
   catch (error){ 
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }
 exports.deleteuser = async (req,res) => {
@@ -62,6 +91,9 @@ exports.deleteuser = async (req,res) => {
     res.json({ msg: 'user removed successfully'});
   }
   catch (error){
-    res.status(500).send('Mistake in sight!', error);
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
   }
 }

@@ -27,7 +27,7 @@ const UserSchema =  new Schema({
         type: Number,
         required: false
     },
-    imageProfile:{
+    urlImg:{
         type: String,
         required: false
     }

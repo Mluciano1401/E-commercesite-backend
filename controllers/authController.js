@@ -9,7 +9,8 @@ exports.createUser = (req, res, next) => {
         lastname: req.body.lastname,
         username: req.body.username,
         password: bcrypt.hashSync(req.body.password),
-        role: req.body.role
+        role: req.body.role,
+        money: req.body.money
     }
     Auth.create(newAuth, (err, user)=> {
         if(err && err.code === 11000){
@@ -24,9 +25,12 @@ exports.createUser = (req, res, next) => {
                 expiresIn: expiresIn
             });
         const dataUser = {
+            id: user._id,
             name: user.name,
             lastname: user.lastname,
             username: user.username,
+            money: user.money,
+            urlImg: user.urlImg,
             role: user.role,
             accessToken: accessToken,
             expiresIn: expiresIn
@@ -51,9 +55,12 @@ exports.login = (req, res, next) => {
                 const expiresIn = 24 * 60 * 60;
                 const accessToken = jwt.sign({id: user.id}, SECRET_KEY, {expiresIn: expiresIn});
                 const dataUser = {
+                    id: user._id,
                     name: user.name,
                     lastname: user.lastname,
                     username: user.username,
+                    money: user.money,
+                    urlImg: user.urlImg,
                     role: user.role,
                     accessToken: accessToken,
                     expiresIn: expiresIn

@@ -28,18 +28,20 @@ exports.getProducts = async (req,res) => {
   }
 }
 exports.getProduct = async (req,res) => {
-  console.log(0)
   try{
     let product = await Product.findById(req.params.id);
     if(!product){
       res.status(404).json({ msg: 'product not found'});
+      res.send({ error: "404"});
     }
-    res.json(product);
+    else{
+      res.json(product);
+    }
   }
   catch (error){
     body_error={
       "Mistake in sight!":error
-    }
+    } 
     res.status(500).send(body_error);
   }
 }
