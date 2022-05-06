@@ -1,5 +1,4 @@
 const User = require('../auth/auth.dao');
-
 exports.createuser = async (req, res) => {
     try{
       let user;
@@ -58,21 +57,43 @@ exports.getuserbyname = async (req,res)=>{
   }
 }
 exports.updateuser = async (req,res) => {
+
+  
   try{
     const { name, lastname, username, password,role, money,urlImg }= req.body;
     let user = await User.findById(req.params.id);
     if(!user){
       res.status(404).json({ msg: 'user not found'});
-    }
+    } 
+    
     user.name = name;
     user.lastname = lastname;
     user.username = username;
     user.password= password;
     user.role = role;
     user.money = money;
-    user.urlImg = urlImg,
-    user = await user.findByIdAndUpdate({_id: req.params.id}, user, {new:true});
+    user.urlImg = urlImg;
+    user.save()
     res.json(user);
+  }
+  catch (error){ 
+    body_error={
+      "Mistake in sight!":error
+    }
+    res.status(500).send(body_error);
+  }
+}
+exports.updatemoneyuser = async (req,res) => {  
+  try{
+    const {money}= req.body;
+    let user = await User.findById(req.params.id);
+    if(!user){
+      res.status(404).json({ msg: 'user not found'});
+    } 
+    user.money = money;
+    user.save();   
+    res.json(user);
+   
   }
   catch (error){ 
     body_error={

@@ -11,6 +11,9 @@ UserSchema.statics = {
     },
     getUser: function(){
         this.find();
+    },
+    update: function(id, query, cb){
+        
     }
 }
 const authModel = mongoose.model("Auth", UserSchema);
