@@ -60,7 +60,7 @@ exports.updateuser = async (req,res) => {
 
   
   try{
-    const { name, lastname, username, password,role, money,urlImg }= req.body;
+    const { name, lastname, username, password,role, money,urlImg, biography }= req.body;
     let user = await User.findById(req.params.id);
     if(!user){
       res.status(404).json({ msg: 'user not found'});
@@ -73,6 +73,7 @@ exports.updateuser = async (req,res) => {
     user.role = role;
     user.money = money;
     user.urlImg = urlImg;
+    user.biography = biography;
     user.save()
     res.json(user);
   }

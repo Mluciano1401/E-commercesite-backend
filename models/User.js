@@ -30,6 +30,10 @@ const UserSchema =  new Schema({
     urlImg:{
         type: String,
         required: false
+    },
+    biography:{
+        type: String,
+        required: false
     }
 },
 {
